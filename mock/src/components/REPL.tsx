@@ -16,6 +16,16 @@ export default function REPL() {
   // TODO: Add some kind of shared state that holds all the commands submitted.
   // CHANGED
   const [history, setHistory] = useState<string[]>([])
+  const [csvNametoData, setcsvNametoData] = useState<string|string[][]>([])
+  const [outputMode, setOutputMode] = useState<boolean>(false)
+
+  // const commandMap = new Map<string, REPLFunction>({
+  //   ['load_file', loadCommand],
+  //   ['view', viewCommand],
+  //   ['search', searchCommand],
+  //   ['mode', modeCommand(setOutputMode, outputMode)]
+  // }); 
+
 
   return (
     <div className="repl">  
@@ -24,7 +34,9 @@ export default function REPL() {
       <REPLHistory history={history}/>
       <hr></hr>
       {/* CHANGED */}
-      <REPLInput history={history} setHistory={setHistory}/>
+      <REPLInput csvNametoData={csvNametoData} setcsvNametoData={setcsvNametoData} 
+      history={history} setHistory={setHistory} outputMode={outputMode} setOutputMode={setOutputMode}
+      />
     </div>
   );
 }

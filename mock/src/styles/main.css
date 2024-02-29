@@ -7,13 +7,21 @@
 .repl {
     position:relative;
     min-height:95vh;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .repl-history {      
     height:55vh;   
     margin: auto;
     display: block;
-    overflow: scroll;    
+    overflow: scroll; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+
+    
 }
 
 /* .repl-history-output{
@@ -40,3 +48,17 @@ button{
     margin: auto;
     display: block;
 }
+table{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #dddddd;
+    
+}
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    justify-content: center;
+  }

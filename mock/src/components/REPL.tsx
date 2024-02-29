@@ -16,8 +16,10 @@ import { registerCommand } from './CommandRegistry';
 export default function REPL() {
   // TODO: Add some kind of shared state that holds all the commands submitted.
   // CHANGED
-  const [history, setHistory] = useState<string[]>([])
+  const [history, setHistory] = useState<string[][]>([])
   const [outputMode, setOutputMode] = useState<boolean>(false)
+  const [outputSetting, setOutputSetting] = useState<string>("brief")
+  const [command, setCommand] = useState<string>("")
 
   // const commandMap = new Map<string, REPLFunction>({
   //   ['load_file', loadCommand],
@@ -30,10 +32,12 @@ export default function REPL() {
     <div className="repl">  
       {/*This is where your REPLHistory might go... You also may choose to add it within your REPLInput 
       component or somewhere else depending on your component organization. What are the pros and cons of each? */}
-      <REPLHistory history={history} outputMode={outputMode}/>
+      <REPLHistory history={history} outputMode={outputMode} outputSetting = {outputSetting} command = {command}/>
       <hr></hr>
       {/* CHANGED */}
-      <REPLInput history={history} setHistory={setHistory} outputMode={outputMode} setOutputMode={setOutputMode}
+      <REPLInput history={history} setHistory={setHistory} outputMode={outputMode} 
+      setOutputMode={setOutputMode} outputSetting = {outputSetting} setOutputSetting = {setOutputSetting}
+      command = {command} setCommand = {setCommand}
       />
     </div>
   );

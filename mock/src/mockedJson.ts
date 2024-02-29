@@ -4,6 +4,8 @@ filePathMap.set("/path/to/file1.csv", "Success: File Found and Loaded")
 filePathMap.set("/path/to/file2.csv", "Success: File Found and Loaded")
 filePathMap.set("/path/to/error.csv", "Failure: Filepath Error")
 filePathMap.set(" ", "Failure: File Cannot be Found")
+filePathMap.set("/path/to/fruitAndVegData.csv", "Success: File Found and Loaded")
+
 export const loadedMap = filePathMap
 
 const tableMap = new Map<string, string[][]>();

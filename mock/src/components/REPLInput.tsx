@@ -12,8 +12,14 @@ interface REPLInputProps{
   outputMode: boolean
   setOutputMode: Dispatch<SetStateAction<boolean>>
 
-  history: string[],
-  setHistory: Dispatch<SetStateAction<string[]>>,
+  outputSetting: string 
+  setOutputSetting: Dispatch<SetStateAction<string>>
+
+  command: string
+  setCommand: Dispatch<SetStateAction<string>>
+
+  history: string[][],
+  setHistory: Dispatch<SetStateAction<string[][]>>,
   
 }
 
@@ -89,7 +95,25 @@ export function REPLInput(props : REPLInputProps) {
     //   }
     // }
 
+    registerCommand("mode", (args: Array<string>) : string | string[][] => {
+      props.setCommand("mode " + args.join(" ")); 
+      const modeType = args[0]; 
+      props.setOutputSetting(modeType)
+      if (modeType == "verbose"){
+        props.setOutputMode(true); 
+        return "Mode switched to verbose"
+      } else if (modeType == "breif"){
+        props.setOutputMode(false); 
+        
+        return "Mode switched to breif"
+      }else{
+        return "No mode for " + modeType + ". Available modes are breif or verbose"
+      }
+
+    })
+
     registerCommand("load_file", (args: Array<string>): string | string[][] => {
+      props.setCommand("load_file " + args.join(" ")); 
       const filePath = args[0]
       const resultOfLoad = loadedMap.get(filePath)
       var message = ""
@@ -108,14 +132,16 @@ export function REPLInput(props : REPLInputProps) {
     });
   
     registerCommand("view", (args: Array<string>): string | string[][] => {
+      props.setCommand("view " + args.join(" ")); 
       var message = ""
-
+      
       if (loadedFile == ""){
         return message = "No file loaded"
       }
 
       const resultOfView = viewedMap.get(loadedFile)
       if (Array.isArray(resultOfView)){
+        
         if (props.outputMode){
           return resultOfView
         } else{
@@ -126,6 +152,7 @@ export function REPLInput(props : REPLInputProps) {
     });
   
     registerCommand('search', (args: Array<string>): string | string[][] => {
+      props.setCommand("search " + args.join(" ")); 
       var message = ""
       if (loadedFile == ""){
         return message = "No file loaded, please load then try again"
@@ -146,26 +173,40 @@ export function REPLInput(props : REPLInputProps) {
     });
 
     function handleSubmit(commandString:string) {
+      
       const [command, ...args] = commandString.split(' ');
       const processor = getCommandProcessor(command.toLowerCase());
       setCommandString('')
       
       if (processor){
+        
         const result = processor(args)
         
         if(typeof result === "string"){
-          props.setHistory([result])
+          
+          props.setHistory([[result]])
           setCount(count+1)
           setCommandString('')
         } else if(Array.isArray(result)){
-            result.forEach((list) => {
-                props.setHistory(list)
-                setCount(count+1)
-                setCommandString('')
-          });
+          props.setHistory(result);
+          //   let updatedHistory = [...props.history]; 
+          //   result.forEach((list) => {
+          //       list.forEach((value) => {
+          //         updatedHistory = [...updatedHistory, [value]]; 
+          //       setCount(count+1)
+          //       setCommandString('')
+          //       })
+          //       // props.setHistory(list)
+          //       // setCount(count+1)
+          //       // setCommandString('')
+          //       props.setHistory(updatedHistory); 
+          // }
+          
+          // );
+         // props.setHistory(updatedHistory); 
         }
       } else{
-        props.setHistory(["Command Not Found!"])
+        props.setHistory([["Command Not Found!"]])
         setCommandString('')
       }
   

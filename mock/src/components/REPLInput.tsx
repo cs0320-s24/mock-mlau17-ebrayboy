@@ -117,13 +117,9 @@ export function REPLInput(props : REPLInputProps) {
       const resultOfView = viewedMap.get(loadedFile)
       if (Array.isArray(resultOfView)){
         if (props.outputMode){
-          resultOfView.forEach((list) => {
-            return list
-        });
+          return resultOfView
         } else{
-          resultOfView.forEach((list) => {
-            return list
-          });
+          return resultOfView
         }
       }
       return message
@@ -132,7 +128,7 @@ export function REPLInput(props : REPLInputProps) {
     registerCommand('search', (args: Array<string>): string | string[][] => {
       var message = ""
       if (loadedFile == ""){
-        props.setHistory(["No file loaded, please load then try again"])
+        return message = "No file loaded, please load then try again"
       }
 
       const identifiers = commandString.split(" ");
@@ -140,13 +136,9 @@ export function REPLInput(props : REPLInputProps) {
 
       if (Array.isArray(resultOfSearch)){
         if (props.outputMode){
-          resultOfSearch.forEach((list) => {
-            return list
-        });
+          return resultOfSearch
         } else{
-          resultOfSearch.forEach((list) => {
-            return list
-          });
+          return resultOfSearch
         }
       }
 
@@ -167,11 +159,9 @@ export function REPLInput(props : REPLInputProps) {
           setCommandString('')
         } else if(Array.isArray(result)){
             result.forEach((list) => {
-              list.forEach((value) => {
-              props.setHistory([value]);
-              setCount(count+1)
-              setCommandString('')
-              });
+                props.setHistory(list)
+                setCount(count+1)
+                setCommandString('')
           });
         }
       } else{

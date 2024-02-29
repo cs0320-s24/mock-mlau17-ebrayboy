@@ -2,7 +2,10 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import '../styles/main.css';
 import { ControlledInput } from './ControlledInput';
 import { registerCommand, getCommandProcessor} from './CommandRegistry';
-import { loadedMap } from '../mockedJson';}
+import { loadedMap } from '../mockedJson';
+import {viewedMap} from '../mockedJson';
+import { searchedMap } from '../mockedJson';
+
 
 interface REPLInputProps{
 
@@ -94,11 +97,11 @@ export function REPLInput(props : REPLInputProps) {
 
       if (typeof resultOfLoad == "string"){
         if (props.outputMode){
-          props.setHistory([resultOfLoad])
           message = "Load Completed!"
+          return resultOfLoad
         } else{
-          props.setHistory([resultOfLoad])
           message = "Load Completed!"
+          return resultOfLoad
         }
       }
       return message
@@ -108,18 +111,18 @@ export function REPLInput(props : REPLInputProps) {
       var message = ""
 
       if (loadedFile == ""){
-        props.setHistory(["No file loaded, please load then try again"])
+        return message = "No file loaded"
       }
 
-      const resultOfView = viewMap.get(loadedFile)
+      const resultOfView = viewedMap.get(loadedFile)
       if (Array.isArray(resultOfView)){
         if (props.outputMode){
           resultOfView.forEach((list) => {
-            props.setHistory(list)
+            return list
         });
         } else{
           resultOfView.forEach((list) => {
-            props.setHistory(list)
+            return list
           });
         }
       }
@@ -133,16 +136,16 @@ export function REPLInput(props : REPLInputProps) {
       }
 
       const identifiers = commandString.split(" ");
-      const resultOfSearch = searchMap.get(identifiers[1])
+      const resultOfSearch = searchedMap.get(identifiers[1])
 
       if (Array.isArray(resultOfSearch)){
         if (props.outputMode){
           resultOfSearch.forEach((list) => {
-            props.setHistory(list)
+            return list
         });
         } else{
           resultOfSearch.forEach((list) => {
-            props.setHistory(list)
+            return list
           });
         }
       }
@@ -153,26 +156,31 @@ export function REPLInput(props : REPLInputProps) {
     function handleSubmit(commandString:string) {
       const [command, ...args] = commandString.split(' ');
       const processor = getCommandProcessor(command.toLowerCase());
-
+      setCommandString('')
+      
       if (processor){
         const result = processor(args)
         
         if(typeof result === "string"){
           props.setHistory([result])
           setCount(count+1)
+          setCommandString('')
         } else if(Array.isArray(result)){
             result.forEach((list) => {
-              props.setHistory(list);
+              list.forEach((value) => {
+              props.setHistory([value]);
               setCount(count+1)
+              setCommandString('')
+              });
           });
         }
       } else{
         props.setHistory(["Command Not Found!"])
+        setCommandString('')
       }
   
       // setCount(count+1)
       // props.setHistory([...props.history, commandString])
-      // setCommandString('')
     }
 
     /**

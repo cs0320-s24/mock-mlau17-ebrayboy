@@ -1,5 +1,5 @@
 export interface REPLFunction{
-    (args: Array<string>) : String|String[][]
+    (args: Array<string>) : string|string[][]
   }
 
 const commandRegistry = new Map<string, REPLFunction>

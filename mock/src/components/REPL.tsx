@@ -2,6 +2,7 @@ import { useState } from 'react';
 import '../styles/main.css';
 import { REPLHistory } from './REPLHistory';
 import { REPLInput } from './REPLInput';
+import { registerCommand } from './CommandRegistry';
 
 /* 
   You'll want to expand this component (and others) for the sprints! Remember 
@@ -16,7 +17,6 @@ export default function REPL() {
   // TODO: Add some kind of shared state that holds all the commands submitted.
   // CHANGED
   const [history, setHistory] = useState<string[]>([])
-  const [csvNametoData, setcsvNametoData] = useState<string|string[][]>([])
   const [outputMode, setOutputMode] = useState<boolean>(false)
 
   // const commandMap = new Map<string, REPLFunction>({
@@ -26,16 +26,14 @@ export default function REPL() {
   //   ['mode', modeCommand(setOutputMode, outputMode)]
   // }); 
 
-
   return (
     <div className="repl">  
       {/*This is where your REPLHistory might go... You also may choose to add it within your REPLInput 
       component or somewhere else depending on your component organization. What are the pros and cons of each? */}
-      <REPLHistory history={history}/>
+      <REPLHistory history={history} outputMode={outputMode}/>
       <hr></hr>
       {/* CHANGED */}
-      <REPLInput csvNametoData={csvNametoData} setcsvNametoData={setcsvNametoData} 
-      history={history} setHistory={setHistory} outputMode={outputMode} setOutputMode={setOutputMode}
+      <REPLInput history={history} setHistory={setHistory} outputMode={outputMode} setOutputMode={setOutputMode}
       />
     </div>
   );

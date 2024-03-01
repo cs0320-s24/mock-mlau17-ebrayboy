@@ -39,3 +39,5 @@ To run our testing suite, in the terminal enter: "npx playwright test".
 
 # Collaboration
 https://react.dev/
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table
+Stack Overflow

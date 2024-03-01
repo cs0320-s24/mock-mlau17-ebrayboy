@@ -61,17 +61,17 @@ tableMap.set("/path/to/malformed.csv",[["Error: Malformed CSV File"]])
 export const viewedMap = tableMap
 
 const valueMap = new Map<string, string[][]>();
-valueMap.set("0,Apple", [fruitAndVegData[0]]);
-valueMap.set("Name,Bob", [personAndAddress[3]]);
-valueMap.set("Age,27", [personAndAddress[2]]);
-valueMap.set("1,27", [personAndAddress[2]]);
+valueMap.set("0 Apple", [fruitAndVegData[0]]);
+valueMap.set("Name Bob", [personAndAddress[3]]);
+valueMap.set("Age 27", [personAndAddress[2]]);
+valueMap.set("1 27", [personAndAddress[2]]);
 valueMap.set("Bob", [["Error: Incorrect Format, Please re-enter"]]); // Incorrect Format
-valueMap.set("0,maize", [personAndAddress[1]]); // Lowercase name
-valueMap.set("1,orange", [fruitAndVegData[1]])
-valueMap.set("5,orange", [["Error: Index Out of Bounds"]]) //Out of bounds
-valueMap.set("0,corn", [["Error: Value not found"]]) //Value not found
-valueMap.set("Sign,Gemini", [constellations[3], constellations[15], constellations[19], constellations[20],
+valueMap.set("0 maize", [personAndAddress[1]]); // Lowercase name
+valueMap.set("1 orange", [fruitAndVegData[1]])
+valueMap.set("5 orange", [["Error: Index Out of Bounds"]]) //Out of bounds
+valueMap.set("0 corn", [["Error: Value not found"]]) //Value not found
+valueMap.set("Sign Gemini", [constellations[3], constellations[15], constellations[19], constellations[20],
 constellations[24]]); // Multiple rows
-valueMap.set("Number,5", [["Error: Non-existent column name"]]) //Non-existent column name
+valueMap.set("Number 5", [["Error: Non-existent column name"]]) //Non-existent column name
 
 export const searchedMap = valueMap

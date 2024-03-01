@@ -38,12 +38,14 @@ export function REPLHistory(props : REPLHistoryProps) {
         // modeTextCommand = "Command:" + props.command
         // modeTextOutput = "Output:" 
     }
+    let table = populateTable(props.history)
     return (
         <div className="repl-history" >
             {'Mode:' + props.outputSetting}
             
             
-            <table>
+            {table}
+            {/* <table>
             
                 <tbody>
                 
@@ -56,7 +58,25 @@ export function REPLHistory(props : REPLHistoryProps) {
                         
                     ))}
                 </tbody>
-            </table>
+            </table> */}
         </div> 
+        
     );
 }
+
+function populateTable(twoDArray: string[][]): JSX.Element {
+    return (
+      <table>
+        <tbody>
+          {twoDArray.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  }
+  

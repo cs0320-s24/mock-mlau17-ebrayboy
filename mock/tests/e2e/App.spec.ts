@@ -55,6 +55,124 @@ test('after I type into the input box, its text changes', async ({ page }) => {
   await expect(page.getByLabel('Command input')).toHaveValue(mock_input)
 });
 
+test('mode display works', async({page}) => {
+  await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('mode verbose')
+  await page.click('text=/Submitted/'); 
+
+  await expect(page.locator(".repl-history")).toContainText('Mode:verbose')
+
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('mode brief')
+  await page.click('text=/Submitted/'); 
+
+  await expect(page.locator(".repl-history")).toContainText('Mode:brief')
+})
+
+test('mode function works', async({page}) => {
+  await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('mode verbose')
+  await page.click('text=/Submitted/'); 
+
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')
+  await page.click('text=/Submitted/'); 
+  await expect(page.locator('table')).toHaveText(/command: load_file \/path\/to\/fruitAndVegData.csv/)
+  await expect(page.locator('table')).toHaveText(/output: /)
+
+
+
+  
+})
+
+test('default mode is brief', async({page}) => {
+  await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await expect(page.locator(".repl-history")).toContainText('Mode:brief')
+
+})
+
+test('load_file good output', async({page}) => {
+  await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')
+  await page.click('text=/Submitted/'); 
+  await expect(page.locator('table')).toHaveText('Success: File Found and Loaded')
+
+
+
+})
+
+test('load_file bad output', async({page}) => {
+  await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file /path/to/error.csv')
+  await page.click('text=/Submitted/'); 
+  await expect(page.locator('table')).toHaveText(/Failure: Filepath Error/)
+
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file ')
+  await page.click('text=/Submitted/'); 
+  await expect(page.locator('table')).toHaveText(/Failure: File Cannot be Found/)
+})
+
+test('view good output', async({page}) => {
+  await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')
+  await page.click('text=/Submitted/'); 
+
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('view')
+  await page.click('text=/Submitted/'); 
+  const rowCount = await page.locator('table tbody tr').count()
+  expect(rowCount).toBe(4)
+  await expect(page.locator('table')).toHaveText(/orange/)
+})
+
+
+
+test('search good output', async({page}) => {
+  await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')
+  await page.click('text=/Submitted/'); 
+
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('search 0 Apple')
+  await page.click('text=/Submitted/'); 
+  await expect(page.locator('table')).toHaveText(/Apple/)
+  await expect(page.locator('table')).toHaveText(/red/)
+  await expect(page.locator('table')).toHaveText(/fruit/)
+})
+
+test('search bad output', async({page}) => {
+  await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')
+  await page.click('text=/Submitted/'); 
+
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('search 5 orange')
+  await page.click('text=/Submitted/'); 
+  await expect(page.locator('table')).toHaveText(/Error: Index Out of Bounds/)
+  
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('search 0 corn')
+  await page.click('text=/Submitted/'); 
+  await expect(page.locator('table')).toHaveText(/Error: Value not found/)
+
+})
+
 test('on page load, i see a button', async ({ page }) => {
   // TODO WITH TA: Fill this in!
 });

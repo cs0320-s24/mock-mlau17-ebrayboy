@@ -169,7 +169,7 @@ export function REPLInput(props : REPLInputProps) {
         if (props.outputMode){
           message = "Load Completed!"
           
-          return ("command: " + "load_file " + args.join(" ") + " =========>" +  "\noutput: '" + resultOfLoad +"'")
+          return ("command: " + "load_file " + args.join(" ") + " ->" +  "\noutput: '" + resultOfLoad +"'")
         } else{
           message = "Load Completed!"
           return resultOfLoad
@@ -202,10 +202,17 @@ export function REPLInput(props : REPLInputProps) {
       if (Array.isArray(resultOfView)){
         
         if (props.outputMode){
+          if (resultOfView[0][0] != "command: view"){
+            resultOfView.unshift(["command: view"],["output: "])
+            }
           
           
           return resultOfView
         } else{
+          if (resultOfView[0][0] == "command: view"){
+            resultOfView.shift()
+            resultOfView.shift()
+          }
           return resultOfView
         }
       }
@@ -229,18 +236,29 @@ export function REPLInput(props : REPLInputProps) {
       }
 
       const identifiers = commandString.split(" ");
-      const resultOfSearch = searchedMap.get(identifiers[1])
+      const resultOfSearch = searchedMap.get(identifiers[1] + " " + identifiers[2])
 
       if (Array.isArray(resultOfSearch)){
         if (props.outputMode){
+          if (resultOfSearch[0][0] != "command: " + identifiers){
+          resultOfSearch.unshift(["command: " + identifiers], ["output: "])
+          }
           return resultOfSearch
         } else{
+          if (resultOfSearch[0][0] == "command: " + identifiers){
+            resultOfSearch.shift()
+            resultOfSearch.shift()
+          }
           return resultOfSearch
         }
       }
 
       return message
     });
+
+
+    
+    
 
     /**
     * handles what the program is supposed to do when the user clicks submit, taking in the 

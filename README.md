@@ -27,9 +27,13 @@ To run our testing suite, in the terminal enter: "npx playwright test".
 
 # How to
 1.) In the terminal, run "npm start," and click on the link that appears in the terminal.
+
 2.) Before using the web interface, you will have to log in, which you can do by clicking the log-in button at the top of the page. Then you will see the input box that says "Enter Command Here!" Along with a place that says what output mode you are in, the default output mode is brief and if you want to change it enter the command: "mode verbose". And to change it back enter the command: "mode brief". Make sure to click submit after inputting your command. The brief mode only displays the result of the command, while verbose displays the command used and the result of the command.
+
 3.) Now to use the web functionalities, you will have to load a file first. To load a file you would enter this command: "load_file <file-path>." Then click submit and an appropriate message will appear near the top of the screen. 
+
 4.) To view the file that you loaded, use the command: "view". Then click submit and it should be displayed to you in a table format. 
+
 5.) To search the file that you loaded or viewed, use the command: "search <column identifier>,<value>". Then click submit and the rows that match the value, and the column identifier if you used it, will be displayed as a table. (Note: Please only use column name or column index for a column identifier or else it will not work. Also, make sure the identifier and value you are looking for are only separated by a comma and not any spaces. If the value you are looking for is two or more separate words use "_" instead of a space.)
 
 # Collaboration

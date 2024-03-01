@@ -7,7 +7,7 @@ Team Members and Contributors: mlau17 and ebrayboy
 
 Total estimated time it took to complete project: 20 hours
 
-Repo Link: 
+Repo Link: https://github.com/cs0320-s24/mock-mlau17-ebrayboy.git
 
 # Design Choices
 During this sprint, we utilized a total of seven files to create a web front-end interface that will be able to call user commands like load, view, and search CSV files. The seven files are App.tsx, CommandRegistry.ts, ControlledInput.tsx, LoginButton.tsx, REPL.tsx, REPLHistory.tsx, and REPLInput.tsx. At the program's top level is App.tsx, which incorporates LoginButton.tsx to verify user authentication. If the user is logged in, the program initiates REPL.tsx. REPL serves as the core component for storing information, enabling access to this data and various states at any subordinate level. Information and states are then conveyed from REPL to both REPLHistory.tsx and REPLInput.tsx. Among these, REPLInput.tsx is a little more important as it employs ControlledInput.tsx to generate an input field, subsequently capturing and managing the inputs. This input is used to interact with our command map in CommandRegistry.ts, which includes an interface defining a function, a map, a method for assigning a name to a function, and another method for retrieving a function by name. So when the submit button is clicked, this process locates the desired function, executes it, and forwards the output to the history, which is then displayed as a table in REPLHistory.tsx.

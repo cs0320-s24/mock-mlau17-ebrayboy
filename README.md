@@ -17,7 +17,7 @@ I primarily utilized a nested list of strings for my data structures because the
 I introduced CommandRegistry.ts to act akin to a global variable, storing all functions and their respective names. This approach simplifies the process for developers to add or remove commands. By registering a new command, a developer specifies its functionality, while deletion is just as straightforward. This system effectively eliminates the need for extensive if-else statements, streamlining the creation and removal of functions as necessary. 
 
 # Errors/Bugs
-The way that the HTML table is displayed is not perfect, some blocks are larger, and some that are smaller. 
+There is a small issue with how the outputs are formatted, but it does not impact how the program functions and is still clearly readable for the reader. To recreate this small issue, just load a file and run either view or search. Other than that we did not notice anything else.
 
 # Tests
 One of the methods we employed to test our code's functionality was through mocking. We created a file named mockedJson.ts, which contains three maps populated with predefined inputs and their corresponding outputs, effectively simulating real-world data retrieval. To facilitate the implementation of mocking, we imported it into our REPLInput and integrated it within our load, view, and search methods to verify whether they returned the correct values. This approach allows us to assess our code's performance in the absence of a backend.
@@ -39,3 +39,5 @@ To run our testing suite, in the terminal enter: "npx playwright test".
 
 # Collaboration
 https://react.dev/
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table
+Stack Overflow

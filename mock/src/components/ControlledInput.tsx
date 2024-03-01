@@ -1,18 +1,30 @@
 import '../styles/main.css';
 import { Dispatch, SetStateAction } from 'react';
 
-// Remember that parameter names don't necessarily need to overlap;
-// I could use different variable names in the actual function.
+/**
+ * This is controls the text box/command line where the user inputs in the command they want
+ * and the other data.
+ */
+
+/**
+ * This interface is stores the input and shares its state with other classes.
+ * Making sure the stored input is the same across the program.
+ * @prop value represents the command string
+ * @prop setvalue allows the command string to be updated when a change to the input changes
+ * @prop ariaLabel, used to indicate an interactive property
+ */
 interface ControlledInputProps {
     value: string, 
-    // This type comes from React+TypeScript. VSCode can suggest these.
-    //   Concretely, this means "a function that sets a state containing a string"
     setValue: Dispatch<SetStateAction<string>>,
     ariaLabel: string 
   }
   
-  // Input boxes contain state. We want to make sure React is managing that state,
-  //   so we have a special component that wraps the input box.
+/**
+ * This is the main function that controls what it looks like and showing the value when the user types
+ * @param param0
+ * 
+ * @return where the user inputs commands and the prompt visible to the user
+ */
   export function ControlledInput({value, setValue, ariaLabel}: ControlledInputProps) {
     return (
       <input type="text" className="repl-command-box"

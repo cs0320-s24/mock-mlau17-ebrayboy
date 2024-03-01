@@ -10,9 +10,10 @@ import { expect, test } from "@playwright/test";
  */
 
 // If you needed to do something before every test case...
-test.beforeEach(() => {
+test.beforeEach(async ({page}) => {
     // ... you'd put it here.
     // TODO: Is there something we need to do before every test case to avoid repeating code?
+    await page.goto('http://localhost:8000/')
   })
 
 /**
@@ -23,13 +24,13 @@ test.beforeEach(() => {
  */
 test('on page load, i see a login button', async ({ page }) => {
   // Notice: http, not https! Our front-end is not set up for HTTPs.
-  await page.goto('http://localhost:8000/');
+  
   await expect(page.getByLabel('Login')).toBeVisible()
 })
 
 test('on page load, i dont see the input box until login', async ({ page }) => {
   // Notice: http, not https! Our front-end is not set up for HTTPs.
-  await page.goto('http://localhost:8000/');
+  
   await expect(page.getByLabel('Sign Out')).not.toBeVisible()
   await expect(page.getByLabel('Command input')).not.toBeVisible()
   
@@ -41,7 +42,7 @@ test('on page load, i dont see the input box until login', async ({ page }) => {
 
 test('after I type into the input box, its text changes', async ({ page }) => {
   // Step 1: Navigate to a URL
-  await page.goto('http://localhost:8000/');
+  
   await page.getByLabel('Login').click();
 
   // Step 2: Interact with the page
@@ -56,7 +57,7 @@ test('after I type into the input box, its text changes', async ({ page }) => {
 });
 
 test('mode display works', async({page}) => {
-  await page.goto('http://localhost:8000/')
+  
   await page.getByLabel('Login').click();
   await page.getByLabel("Command input").click()
   await page.getByLabel('Command input').fill('mode verbose')
@@ -72,7 +73,7 @@ test('mode display works', async({page}) => {
 })
 
 test('mode function works', async({page}) => {
-  await page.goto('http://localhost:8000/')
+  
   await page.getByLabel('Login').click();
   await page.getByLabel("Command input").click()
   await page.getByLabel('Command input').fill('mode verbose')
@@ -90,7 +91,7 @@ test('mode function works', async({page}) => {
 })
 
 test('default mode is brief', async({page}) => {
-  await page.goto('http://localhost:8000/')
+  
   await page.getByLabel('Login').click();
   await expect(page.locator(".repl-history")).toContainText('Mode:brief')
 
@@ -108,8 +109,30 @@ test('load_file good output', async({page}) => {
 
 })
 
+test('state-changing load output', async({page}) => {
+  
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')
+  await page.click('text=/Submitted/'); 
+
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('load_file /path/to/constellations.csv')
+  await page.click('text=/Submitted/'); 
+
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('view')
+  await page.click('text=/Submitted/'); 
+
+  await expect(page.locator('table')).toHaveText(/Orion/)
+
+
+})
+
+
+
 test('load_file bad output', async({page}) => {
-  await page.goto('http://localhost:8000/')
+  
   await page.getByLabel('Login').click();
   await page.getByLabel("Command input").click()
   await page.getByLabel('Command input').fill('load_file /path/to/error.csv')
@@ -122,8 +145,20 @@ test('load_file bad output', async({page}) => {
   await expect(page.locator('table')).toHaveText(/Failure: File Cannot be Found/)
 })
 
-test('view good output', async({page}) => {
+test('other commands without loading', async({page}) => {
   await page.goto('http://localhost:8000/')
+  await page.getByLabel('Login').click();
+  await page.getByLabel("Command input").click()
+  await page.getByLabel('Command input').fill('view')
+  await page.click('text=/Submitted/'); 
+  await expect(page.locator('table')).toHaveText('No file loaded, please load then try again')
+
+
+
+})
+
+test('view good output', async({page}) => {
+  
   await page.getByLabel('Login').click();
   await page.getByLabel("Command input").click()
   await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')
@@ -140,7 +175,7 @@ test('view good output', async({page}) => {
 
 
 test('search good output', async({page}) => {
-  await page.goto('http://localhost:8000/')
+  
   await page.getByLabel('Login').click();
   await page.getByLabel("Command input").click()
   await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')
@@ -155,7 +190,7 @@ test('search good output', async({page}) => {
 })
 
 test('search bad output', async({page}) => {
-  await page.goto('http://localhost:8000/')
+  
   await page.getByLabel('Login').click();
   await page.getByLabel("Command input").click()
   await page.getByLabel('Command input').fill('load_file /path/to/fruitAndVegData.csv')

@@ -139,12 +139,12 @@ export function REPLInput(props : REPLInputProps) {
       if (modeType == "verbose"){
         props.setOutputMode(true); 
         return "Mode switched to verbose"
-      } else if (modeType == "breif"){
+      } else if (modeType == "brief"){
         props.setOutputMode(false); 
         
-        return "Mode switched to breif"
+        return "Mode switched to brief"
       }else{
-        return "No mode for " + modeType + ". Available modes are breif or verbose"
+        return "No mode for " + modeType + ". Available modes are brief or verbose"
       }
 
     })
@@ -168,12 +168,16 @@ export function REPLInput(props : REPLInputProps) {
       if (typeof resultOfLoad == "string"){
         if (props.outputMode){
           message = "Load Completed!"
-          return resultOfLoad
+          
+          return ("command: " + "load_file " + args.join(" ") + " =========>" +  "\noutput: '" + resultOfLoad +"'")
         } else{
           message = "Load Completed!"
           return resultOfLoad
         }
       }
+      // if (props.outputMode){
+      //   message = "command: load_file " + args.join(" ") + message;
+      // }
       return message
     });
   
@@ -187,7 +191,7 @@ export function REPLInput(props : REPLInputProps) {
     * if the command worked and the result of viewing the file
     */
     registerCommand("view", (args: Array<string>): string | string[][] => {
-      props.setCommand("view " + args.join(" ")); 
+      //props.setCommand("view " + args.join(" ")); 
       var message = ""
       
       if (loadedFile == ""){
@@ -198,6 +202,8 @@ export function REPLInput(props : REPLInputProps) {
       if (Array.isArray(resultOfView)){
         
         if (props.outputMode){
+          
+          
           return resultOfView
         } else{
           return resultOfView
@@ -248,6 +254,7 @@ export function REPLInput(props : REPLInputProps) {
       const [command, ...args] = commandString.split(' ');
       const processor = getCommandProcessor(command.toLowerCase());
       setCommandString('')
+      props.setCommand(command); 
       
       if (processor){
         

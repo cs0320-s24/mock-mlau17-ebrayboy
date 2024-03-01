@@ -15,7 +15,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
  * @prop command the command that the user inputted
  */
 interface REPLHistoryProps{
-    history: string[][]
+    history: string[][] 
 
     outputMode: boolean
     outputSetting: string
@@ -35,8 +35,8 @@ export function REPLHistory(props : REPLHistoryProps) {
     let modeTextOutput = ""; 
 
     if (props.outputMode){
-        modeTextCommand = "Command:" + props.command
-        modeTextOutput = "Output:" 
+        // modeTextCommand = "Command:" + props.command
+        // modeTextOutput = "Output:" 
     }
     return (
         <div className="repl-history" >
@@ -44,15 +44,16 @@ export function REPLHistory(props : REPLHistoryProps) {
             
             
             <table>
-            {modeTextCommand}
+            
                 <tbody>
-                {modeTextOutput}
+                
                     {props.history.map((row, index) => (
                         <tr key={index}>
                             {row.map((cell, cellIndex) => (
                                 <td key={cellIndex}>{cell}</td>
                             ))}
                         </tr>
+                        
                     ))}
                 </tbody>
             </table>

@@ -45,25 +45,19 @@ export function REPLHistory(props : REPLHistoryProps) {
             
             
             {table}
-            {/* <table>
             
-                <tbody>
-                
-                    {props.history.map((row, index) => (
-                        <tr key={index}>
-                            {row.map((cell, cellIndex) => (
-                                <td key={cellIndex}>{cell}</td>
-                            ))}
-                        </tr>
-                        
-                    ))}
-                </tbody>
-            </table> */}
         </div> 
         
     );
 }
 
+/**
+ * This is a helper function that helps fill up a table to insert into the repl-history
+ * 
+ * @params our history prop, a 2d list of strings, that will be turned into an HTML table
+ * 
+ * @return a JSX.Element, or HTML table, with each inner list in the param represented as a row in the table
+ */
 function populateTable(twoDArray: string[][]): JSX.Element {
     return (
       <table>

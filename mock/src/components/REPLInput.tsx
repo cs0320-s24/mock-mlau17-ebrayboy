@@ -58,70 +58,7 @@ export function REPLInput(props : REPLInputProps) {
     const [filePath, setfilePath] = useState<string>('')
     const [loadedFile, setLoadedFile] = useState<string>('')
 
-    // function changeMode(){
-    //   var results = ""
-    //   if (!props.outputMode){
-    //     results = "Brief"
-    //   } else{
-    //     results = "Verbose"
-    //   }
-    //   props.setHistory([results])
-    // }
-
-    // function loadCSV(command: string){
-    //   const filePath = command.split(" ")[1]
-    //   const resultOfLoad = csvDataMap.get(filePath)
-    //   setLoadedFile(filePath)
-
-    //   if (typeof resultOfLoad == "string"){
-    //     if (props.outputMode){
-    //       props.setHistory([resultOfLoad])
-    //     } else{
-    //       props.setHistory([resultOfLoad])
-    //     }
-    //   }
-    // }
-
-    // function viewCSV(){
-    //   if (loadedFile == ""){
-    //     props.setHistory(["No file loaded, please load then try again"])
-    //   }
-
-    //   const resultOfView = viewMap.get(loadedFile)
-
-    //   if (Array.isArray(resultOfView)){
-    //     if (props.outputMode){
-    //       resultOfView.forEach((list) => {
-    //         props.setHistory(list)
-    //     });
-    //     } else{
-    //       resultOfView.forEach((list) => {
-    //         props.setHistory(list)
-    //       });
-    //     }
-    //   }
-    // }
-
-    // function searchCSV(columnIdentifier: string, value: string){
-    //   if (loadedFile == ""){
-    //     props.setHistory(["No file loaded, please load then try again"])
-    //   }
-
-    //   const identifiers = commandString.split(" ");
-    //   const resultOfSearch = searchMap.get(identifiers[1])
-
-    //   if (Array.isArray(resultOfSearch)){
-    //     if (props.outputMode){
-    //       resultOfSearch.forEach((list) => {
-    //         props.setHistory(list)
-    //     });
-    //     } else{
-    //       resultOfSearch.forEach((list) => {
-    //         props.setHistory(list)
-    //       });
-    //     }
-    //   }
-    // }
+    
 
     /**
     * registering the command mode, which means the functionality to the name "mode" is added to the
@@ -175,9 +112,7 @@ export function REPLInput(props : REPLInputProps) {
           return resultOfLoad
         }
       }
-      // if (props.outputMode){
-      //   message = "command: load_file " + args.join(" ") + message;
-      // }
+      
       return message
     });
   
@@ -191,7 +126,7 @@ export function REPLInput(props : REPLInputProps) {
     * if the command worked and the result of viewing the file
     */
     registerCommand("view", (args: Array<string>): string | string[][] => {
-      //props.setCommand("view " + args.join(" ")); 
+     
       var message = ""
       
       if (loadedFile == ""){
@@ -287,29 +222,14 @@ export function REPLInput(props : REPLInputProps) {
           props.setHistory([
               ...props.history,
               ...result])
-          //   let updatedHistory = [...props.history]; 
-          //   result.forEach((list) => {
-          //       list.forEach((value) => {
-          //         updatedHistory = [...updatedHistory, [value]]; 
-          //       setCount(count+1)
-          //       setCommandString('')
-          //       })
-          //       // props.setHistory(list)
-          //       // setCount(count+1)
-          //       // setCommandString('')
-          //       props.setHistory(updatedHistory); 
-          // }
           
-          // );
-         // props.setHistory(updatedHistory); 
         } 
       } else{
         props.setHistory([["Command Not Found!"]])
         setCommandString('')
       }
   
-      // setCount(count+1)
-      // props.setHistory([...props.history, commandString])
+      
     }
     return (
         <div className="repl-input">
